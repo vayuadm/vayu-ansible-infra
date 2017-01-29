@@ -1,0 +1,6 @@
+---
+
+- name: "Install Packages"
+  apt: "pkg={{ item }} state=installed update_cache=true"
+  notify: "{{ item }} Installed"
+  with_items: "{{ apts_array }}"

@@ -1,0 +1,5 @@
+---
+# A task for updating system packages
+- name: "Update packages"
+  shell: sudo apt update && sudo apt upgrade
+  notify: "Packages updated"

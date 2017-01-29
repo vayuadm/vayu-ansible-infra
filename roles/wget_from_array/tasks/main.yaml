@@ -1,0 +1,6 @@
+---
+# A task for updating system packages
+- name: "Downloading packages"
+  shell: wget "{{ item.url }} && chmod +x {{ item.pkg_name }}"
+  notify: "{{ item.pkg_name }} downloaded"
+  with_nested: "{{ urls_array }}"
