@@ -1,6 +1,9 @@
 ---
-
+# A role for installing packages from an array
 - name: "Install Packages"
-  apt: "pkg={{ item }} state=installed update_cache=true"
-  notify: "{{ item }} Installed"
+  apt:
+    name: "{{ item }}"
+    force: yes
+    state: latest
+    update_cache: true
   with_items: "{{ apts_array }}"

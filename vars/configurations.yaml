@@ -1,8 +1,6 @@
 apts:
   - awscli
   - python
-  # - kubectl
-  # - kops
 
 urls:
   kubectl:
@@ -12,4 +10,5 @@ urls:
     url: https://github.com/kubernetes/kops/releases/download/v1.4.1/kops-linux-amd64
     pkg_name: kops-linux-amd64
 
-temp_dir: ./temp
+temp_dir: ./temp 
+download_dir: /usr/local/bin/

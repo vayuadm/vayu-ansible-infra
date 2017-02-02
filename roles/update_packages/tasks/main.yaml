@@ -1,5 +1,5 @@
 ---
-# A task for updating system packages
+# A role for updating system packages
 - name: "Update packages"
-  shell: sudo apt update && sudo apt upgrade
-  notify: "Packages updated"
+  shell: apt update --assume-yes && apt upgrade --assume-yes
+  # notify: "Packages updated"

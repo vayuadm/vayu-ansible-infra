@@ -1,0 +1,18 @@
+---
+# A role for downloading a file only if it doesn't exsists
+- name: "Check if {{ file_name }} Installed"
+  stat:
+    path: "{{ dest_folder }}"
+  register: status
+
+- name: "Download {{ file_name }}"
+  get_url:
+    url: "{{ file_url }}"
+    dest: "{{ dest_folder }}"
+    mode: u+x
+  when: status.stat.exists == False
+
+- name: "{{ file_name }} already installed"
+  debug:
+    msg: "{{ file_name }} already installed"
+  when: status.stat.exists == True

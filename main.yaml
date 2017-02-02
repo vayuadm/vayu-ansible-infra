@@ -2,41 +2,33 @@
 #Playbook for creating kops client localy
 - hosts: localhost
   connection: local
+  become: true
   vars_files:
     - vars/configurations.yaml
 
-  tasks:
-    - name: create temp folder
-      shell: mkdir "{{ temp_dir }}"
-
-    - name: download kubectl
-      get_url:
-        url: "{{ urls.kubectl.url }}"
-        dest: "/usr/local/bin/{{ urls.kubectl.pkg_name }}"
-        mode: u+x
-
-    - name: download kops
-      get_url:
-        url: "{{ urls.kops.url }}"
-        dest: "/usr/local/bin/{{ urls.kops.pkg_name }}"
-        mode: u+x
-
   roles:
+    - role: wget_if_not_downloaded
+      file_name: "{{ urls.kubectl.pkg_name }}"
+      file_url: "{{ urls.kubectl.urls }}"
+      dest_folder: "{{ download_dir }}{{urls.kubectl.pkg_name}}"
+
+    - role: wget_if_not_downloaded
+      file_name: "{{ urls.kops.pkg_name }}"
+      file_url: "{{ urls.kops.urls }}"
+      dest_folder: "{{ download_dir }}{{urls.kops.pkg_name}}"
+
     - role: update_packages
 
     - role: install_package_from_array
       apts_array: "{{ apts }}"
 
-    # - role: wget_from_array
-    #   urls_array: "{{ urls }}"
-
-  handlers:
-    - name: "Packages updated"
-      shell: echo "Packages updated"
-
-    - name: "{{ item }} Installed"
-      shell: echo "{{ item }} Installed"
-      with_items: "{{ apts }}"
+  # handlers:
+  #   - name: "Packages updated"
+  #     shell: echo "Packages updated"
+  #
+  #   - name: "{{ item }} Installed"
+  #     shell: echo "{{ item }} Installed"
+  #     with_items: "{{ apts }}"
 
     # - name: "{{ urls.kubectl.pkg_name }} downloaded"
     #   shell: sudo mv "{{ urls.kubectl.pkg_name }}" /usr/local/bin/"{{ urls.kubectl.pkg_name }}"
