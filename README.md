@@ -1,4 +1,4 @@
-# Vayu DEV-OPS
+# Vayu Infra - Ansible
 
 You can find here Ansible playbooks for DEV-OPS purposes.
 
