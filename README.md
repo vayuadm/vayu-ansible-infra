@@ -1,6 +1,6 @@
 # Vayu Infra - Ansible
 
-You can find here Ansible playbooks for DEV-OPS purposes.
+You can find here Ansible playbooks for Infrastructure purposes.
 
 ---
 ## Prerequisites - Install Ansible
