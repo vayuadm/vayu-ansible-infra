@@ -4,17 +4,17 @@
   connection: local
   become: true
   vars_files:
-    - vars/configurations.yaml
+    - vars/provisionConf.yaml
 
   roles:
     - role: wget_if_not_downloaded
       file_name: "{{ urls.kubectl.pkg_name }}"
-      file_url: "{{ urls.kubectl.urls }}"
+      file_url: "{{ urls.kubectl.url }}"
       dest_folder: "{{ download_dir }}{{urls.kubectl.pkg_name}}"
 
     - role: wget_if_not_downloaded
       file_name: "{{ urls.kops.pkg_name }}"
-      file_url: "{{ urls.kops.urls }}"
+      file_url: "{{ urls.kops.url }}"
       dest_folder: "{{ download_dir }}{{urls.kops.pkg_name}}"
 
     - role: update_packages
@@ -22,13 +22,5 @@
     - role: install_package_from_array
       apts_array: "{{ apts }}"
 
-  # handlers:
-  #   - name: "Packages updated"
-  #     shell: echo "Packages updated"
-  #
-  #   - name: "{{ item }} Installed"
-  #     shell: echo "{{ item }} Installed"
-  #     with_items: "{{ apts }}"
-
-    # - name: "{{ urls.kubectl.pkg_name }} downloaded"
-    #   shell: sudo mv "{{ urls.kubectl.pkg_name }}" /usr/local/bin/"{{ urls.kubectl.pkg_name }}"
+    - role: install_python_pkgs
+      pkgs_array: "{{ pips }}"

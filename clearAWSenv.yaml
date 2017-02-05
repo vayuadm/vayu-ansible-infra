@@ -1,0 +1,21 @@
+---
+#Playbook for deleting & clearing AWS environment
+- hosts: localhost
+  connection: local
+  become: false
+  vars_files:
+    - vars/awsEnvironmentConf.yaml
+
+  tasks:
+    - name: "Delete the DNS record"
+      route53:
+        command: delete
+        zone: "{{ awsEnv.route53.zone.DNS }}"
+        record: "{{ awsEnv.route53.record.subDNS }}.{{ awsEnv.route53.zone.DNS }}"
+        type: "{{ awsEnv.route53.record.type }}"
+        value: "{{ awsEnv.route53.record.value }}"
+
+    - name: "Delete the DNS zone"
+      route53_zone:
+        state: absent
+        zone: "{{ awsEnv.route53.zone.DNS }}"

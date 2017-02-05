@@ -1,0 +1,10 @@
+awsEnv:
+  route53:
+    zone:
+      DNS: "vayu.io"
+      comment: "Some comment for the DNS zone"
+
+    record:
+      subDNS: "ceribro"
+      type: "A"
+      value: "127.0.0.1"

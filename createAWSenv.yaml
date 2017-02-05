@@ -1,0 +1,22 @@
+---
+#Playbook for creating & preparing AWS environment
+- hosts: localhost
+  connection: local
+  become: false
+  vars_files:
+    - vars/awsEnvironmentConf.yaml
+
+  tasks:
+    - name: "Create a new DNS zone"
+      route53_zone:
+        zone: "{{ awsEnv.route53.zone.DNS }}"
+        state: present
+        comment: "{{ awsEnv.route53.zone.comment }}"
+
+    - name: "Create a new DNS record"
+      route53:
+        command: create
+        zone: "{{ awsEnv.route53.zone.DNS }}"
+        record: "{{ awsEnv.route53.record.subDNS }}.{{ awsEnv.route53.zone.DNS }}"
+        type: "{{ awsEnv.route53.record.type }}"
+        value: "{{ awsEnv.route53.record.value }}"

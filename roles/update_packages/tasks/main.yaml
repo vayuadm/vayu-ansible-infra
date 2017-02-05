@@ -2,4 +2,3 @@
 # A role for updating system packages
 - name: "Update packages"
   shell: apt update --assume-yes && apt upgrade --assume-yes
-  # notify: "Packages updated"

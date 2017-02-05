@@ -9,7 +9,7 @@
   get_url:
     url: "{{ file_url }}"
     dest: "{{ dest_folder }}"
-    mode: u+x
+    mode: a+x
   when: status.stat.exists == False
 
 - name: "{{ file_name }} already installed"

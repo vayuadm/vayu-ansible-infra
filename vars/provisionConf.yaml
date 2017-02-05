@@ -2,13 +2,16 @@ apts:
   - awscli
   - python
 
+pips:
+  - boto3
+  - awscli
+
 urls:
   kubectl:
     url: https://storage.googleapis.com/kubernetes-release/release/v1.4.7/bin/linux/amd64/kubectl
     pkg_name: kubectl
   kops:
     url: https://github.com/kubernetes/kops/releases/download/v1.4.1/kops-linux-amd64
-    pkg_name: kops-linux-amd64
+    pkg_name: kops
 
-temp_dir: ./temp 
 download_dir: /usr/local/bin/

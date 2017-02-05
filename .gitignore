@@ -1,5 +1,6 @@
 temp
 *.retry
+*_creds.*
 
 *.pub
 .boto
