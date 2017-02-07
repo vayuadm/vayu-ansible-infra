@@ -1,0 +1,8 @@
+---
+# tasks file for kops
+
+- name: "Build cluster configuration"
+  shell: "kops create cluster --cloud=aws --ssh-public-key=keys/secret-key.pub --zones={{ awsEnv.region }}a --state=s3://{{ awsEnv.s3.bucket }} {{ awsEnv.route53.record.subDNS }}.{{ awsEnv.route53.zone.DNS }}"
+
+- name: "Create the cluster in AWS"
+  shell: "kops update cluster {{ awsEnv.route53.record.subDNS }}.{{ awsEnv.route53.zone.DNS }} --yes"

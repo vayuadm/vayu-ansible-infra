@@ -3,24 +3,6 @@
 - hosts: localhost
   connection: local
   become: true
-  vars_files:
-    - vars/provisionConf.yaml
 
   roles:
-    - role: wget_if_not_downloaded
-      file_name: "{{ urls.kubectl.pkg_name }}"
-      file_url: "{{ urls.kubectl.url }}"
-      dest_folder: "{{ download_dir }}{{urls.kubectl.pkg_name}}"
-
-    - role: wget_if_not_downloaded
-      file_name: "{{ urls.kops.pkg_name }}"
-      file_url: "{{ urls.kops.url }}"
-      dest_folder: "{{ download_dir }}{{urls.kops.pkg_name}}"
-
-    - role: update_packages
-
-    - role: install_package_from_array
-      apts_array: "{{ apts }}"
-
-    - role: install_python_pkgs
-      pkgs_array: "{{ pips }}"
+    - role: common

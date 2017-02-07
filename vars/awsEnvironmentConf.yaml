@@ -1,4 +1,10 @@
 awsEnv:
+  region: "us-east-2"
+  ec2KeyName: "secret-key"
+
+  s3:
+    bucket: "s3.ceribro.vayu.io"
+
   route53:
     zone:
       DNS: "vayu.io"

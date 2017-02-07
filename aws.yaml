@@ -1,0 +1,8 @@
+---
+# manage AWS environment
+- hosts: localhost
+  connection: local
+  become: false
+
+  roles:
+    - role: aws

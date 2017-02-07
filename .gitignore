@@ -3,4 +3,6 @@ temp
 *_creds.*
 
 *.pub
+*.pem
+
 .boto

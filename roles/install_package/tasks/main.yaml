@@ -1,5 +1,0 @@
----
-
-- name: "Install Package {{pkg_name}}"
-  apt: "pkg={{pkg_name}} state=installed update_cache=true"
-  notify: "{{pkg_name}} Installed"

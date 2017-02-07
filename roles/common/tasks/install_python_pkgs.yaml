@@ -1,0 +1,16 @@
+---
+# A role for installing python packages from apts_array
+- name: "First upgrade pip"
+  pip:
+    name: "{{ item }}"
+    state: forcereinstall
+    extra_args: "--upgrade"
+  with_items:
+    - pip
+    - virtualenv
+
+- name: "Install Python packages"
+  pip:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ pkgs }}"

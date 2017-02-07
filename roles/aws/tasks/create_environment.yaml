@@ -1,0 +1,31 @@
+---
+- include: mng_dns_zone.yaml
+  vars:
+    action: "create"
+    zone_name: "{{ route53.zone.DNS }}"
+    zone_comment: "{{ route53.zone.comment }}"
+
+- include: mng_dns_register.yaml
+  vars:
+    action: "create"
+    zone_name: "{{ route53.zone.DNS }}"
+    record_name: "{{ route53.record.subDNS }}.{{ route53.zone.DNS }}"
+    record_type: "{{ route53.record.type }}"
+    record_value: "{{ route53.record.value }}"
+
+- include: mng_s3_bucket.yaml
+  vars:
+    action: "create"
+    bucket_name: "{{ s3.bucket }}"
+    bucket_region: "{{ region }}"
+
+- include: mng_ec2_keys.yaml
+  vars:
+    action: "create"
+
+- name: "Build cluster configuration"
+  shell: "kops create cluster --cloud=aws --ssh-public-key=keys/{{ region }}/{{ ec2KeyName }}.pub --zones={{ region }}a --state=s3://{{ s3.bucket }} {{ route53.record.subDNS }}.{{ route53.zone.DNS }}"
+  ignore_errors: yes
+
+- name: "Create the cluster in AWS"
+  shell: "kops update cluster --yes --state=s3://{{ s3.bucket }} {{ route53.record.subDNS }}.{{ route53.zone.DNS }}"

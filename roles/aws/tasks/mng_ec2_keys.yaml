@@ -1,0 +1,12 @@
+---
+- include: mng_keys/create_key.yaml
+  vars:
+    ec2_region: "{{ region }}"
+    key_name: "{{ ec2KeyName }}"
+  when: action == "create"
+
+- include: mng_keys/delete_key.yaml
+  vars:
+    ec2_region: "{{ region }}"
+    key_name: "{{ ec2KeyName }}"
+  when: action == "destroy"

@@ -1,9 +1,0 @@
----
-# A role for installing packages from an array
-- name: "Install Packages"
-  apt:
-    name: "{{ item }}"
-    force: yes
-    state: latest
-    update_cache: true
-  with_items: "{{ apts_array }}"

@@ -1,0 +1,11 @@
+---
+- name: "Delete EC2 key from aws"
+  ec2_key:
+    region: "{{ ec2_region }}"
+    name: "{{ key_name }}"
+    state: absent
+
+- name: "Delete keys from local machine"
+  file:
+    state: absent
+    path: "keys/{{ ec2_region }}/"

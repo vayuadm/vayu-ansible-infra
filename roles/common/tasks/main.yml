@@ -1,0 +1,22 @@
+---
+# tasks file for common
+- include: download_pkg.yaml
+  vars:
+    file_name: "{{ item.key }}"
+    file_url: "{{ item.value.url }}"
+    dest_folder: "{{ download_dir }}{{ item.key }}"
+  with_dict: "{{ wget_pkgs }}"
+  tags: wget
+
+- include: update_system_pkgs.yaml
+  tags: sys_update
+
+- include: install_pkgs.yaml
+  vars:
+    pkgs: "{{ apt_pkgs }}"
+  tags: apt
+
+- include: install_python_pkgs.yaml
+  vars:
+    pkgs: "{{ pip_pkgs }}"
+  tags: pip

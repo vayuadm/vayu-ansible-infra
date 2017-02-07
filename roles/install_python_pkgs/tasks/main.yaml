@@ -1,6 +1,0 @@
----
-# A role for installing python packages from apts_array
-- name: "Install Python packages"
-  pip:
-    name: "{{ item }}"
-  with_items: "{{ pkgs_array }}"

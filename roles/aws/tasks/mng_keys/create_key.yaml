@@ -1,0 +1,21 @@
+---
+- name: "Generate EC2 key"
+  ec2_key:
+    region: "{{ ec2_region }}"
+    name: "{{ key_name }}"
+  register: keypair
+
+- name: "Create folder for EC2 key"
+  file: "path=keys/{{ ec2_region }} state=directory mode=0700"
+  when: keypair.changed
+
+- name: "Save key to local machine"
+  copy:
+    content: "{{ keypair.key.private_key }}"
+    dest: "keys/{{ ec2_region }}/{{ key_name }}.pem"
+    mode: 0600
+  when: keypair.changed
+
+- name: "Generate a public key"
+  shell: "ssh-keygen -y -f keys/{{ ec2_region }}/{{ key_name }}.pem > keys/{{ ec2_region }}/{{ key_name }}.pub"
+  when: keypair.changed

@@ -20,3 +20,32 @@
         record: "{{ awsEnv.route53.record.subDNS }}.{{ awsEnv.route53.zone.DNS }}"
         type: "{{ awsEnv.route53.record.type }}"
         value: "{{ awsEnv.route53.record.value }}"
+
+    - name: "Create A S3-Bucket for the cluster"
+      s3:
+        bucket: "{{ awsEnv.s3.bucket }}"
+        region: "{{ awsEnv.region }}"
+        mode: create
+
+    - name: "Generate EC2 key"
+      ec2_key:
+        region: "{{ awsEnv.region }}"
+        name: "{{ awsEnv.ec2KeyName }}"
+      register: keypair
+
+    - name: "Create folder for EC2 key"
+      file: "path=keys/{{ awsEnv.region }} state=directory mode=0700"
+      when: keypair.changed
+
+    - name: "Save key to local machine"
+      copy:
+        content: "{{ keypair.key.private_key }}"
+        dest: "keys/{{ awsEnv.region }}/{{ awsEnv.ec2KeyName }}.pem"
+        mode: 0600
+      when: keypair.changed
+
+    - name: "Build cluster configuration"
+      shell: "kops create cluster --cloud=aws --ssh-private-key={{ keypair.key.private_key }} --zones={{ awsEnv.region }}a --state=s3://{{ awsEnv.s3.bucket }} {{ awsEnv.route53.record.subDNS }}.{{ awsEnv.route53.zone.DNS }}"
+
+    - name: "Create the cluster in AWS"
+      shell: "kops update cluster {{ awsEnv.route53.record.subDNS }}.{{ awsEnv.route53.zone.DNS }} --yes"
