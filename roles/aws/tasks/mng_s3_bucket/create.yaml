@@ -1,0 +1,6 @@
+---
+- name: "Create A S3-Bucket for the cluster"
+  s3:
+    bucket: "{{ bucket_name }}"
+    region: "{{ bucket_region }}"
+    mode: create

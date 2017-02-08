@@ -1,0 +1,8 @@
+---
+- name: "Delete DNS record"
+  route53:
+    command: delete
+    zone: "{{ zone_name }}"
+    record: "{{ record_name }}"
+    type: "{{ record_type }}"
+    value: "{{ record_value }}"

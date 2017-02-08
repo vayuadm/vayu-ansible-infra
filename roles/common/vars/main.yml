@@ -4,8 +4,8 @@ pip_pkgs:
   - setuptools
   - boto3
   - awscli
-  - cryptography
-  - pyopenssl
+  # - cryptography
+  # - pyopenssl
 
 apt_pkgs:
   - python

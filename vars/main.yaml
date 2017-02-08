@@ -1,0 +1,18 @@
+---
+# vars for aws infrastructure
+region: "us-east-2"
+ec2KeyName: "secret-key"
+ec2InstanceType: "t2.medium"
+
+s3:
+  bucket: "s3.ceribro.vayu.io"
+
+route53:
+  zone:
+    DNS: "vayu.io"
+    comment: "Some comment for the DNS zone"
+
+  record:
+    subDNS: "ceribro"
+    type: "A"
+    value: "127.0.0.1"

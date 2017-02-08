@@ -2,7 +2,11 @@
 # tasks file for aws
 
 - include: create_environment.yaml
-  tags: create
+  tags:
+    - create
+    - aws-create
 
 - include: destroy_environment.yaml
-  tags: destroy
+  tags:
+    - destroy
+    - aws-destroy

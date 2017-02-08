@@ -1,0 +1,6 @@
+---
+- name: "Create a DNS zone"
+  route53_zone:
+    zone: "{{ zone_name }}"
+    state: present
+    comment: "{{ zone_comment }}"

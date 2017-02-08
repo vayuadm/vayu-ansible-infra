@@ -4,5 +4,12 @@
   connection: local
   become: false
 
+  pre_tasks:
+    - name: "Check if --tags is provided"
+      fail:
+        msg: "You must supply one(!) of the following tags: [create, destroy, aws-create, aws-destroy, kops-create, kops-destroy]"
+      when: tags is not defined
+
   roles:
     - role: aws
+    - role: kops
