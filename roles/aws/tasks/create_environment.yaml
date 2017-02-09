@@ -19,19 +19,4 @@
 - include: mng_ec2_keys/create.yaml
   vars:
     ec2_region: "{{ region }}"
-    key_name: "{{ ec2KeyName }}"
-
-# - name: "Build cluster configuration"
-#   command: "kops create cluster {{ route53.record.subDNS }}.{{ route53.zone.DNS }} \
-#                                 --cloud=aws \
-#                                 --ssh-public-key=keys/{{ region }}/{{ ec2KeyName }}.pub \
-#                                 --node-count=2 \
-#                                 --zones={{ region }}a \
-#                                 --master-zones={{ region }}a \
-#                                 --node-size={{ ec2InstanceType }} \
-#                                 --master-size={{ ec2InstanceType }} \
-#                                 --state=s3://{{ s3.bucket }}"
-#   ignore_errors: yes
-#
-# - name: "Create the cluster in AWS"
-#   command: "kops update cluster --yes --state=s3://{{ s3.bucket }} {{ route53.record.subDNS }}.{{ route53.zone.DNS }}"
+    key_name: "{{ ec2_key_name }}"

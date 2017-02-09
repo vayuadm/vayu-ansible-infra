@@ -2,11 +2,11 @@
 - name: "Build cluster configuration"
   command: "kops create cluster {{ route53.record.subDNS }}.{{ route53.zone.DNS }} \
                                 --cloud=aws \
-                                --ssh-public-key=keys/{{ region }}/{{ ec2KeyName }}.pub \
-                                --node-count=2 \
+                                --ssh-public-key=keys/{{ region }}/{{ ec2_key_name }}.pub \
+                                --node-count={{ cluster.num_of_nodes }} \
                                 --zones={{ region }}a \
                                 --master-zones={{ region }}a \
-                                --node-size={{ ec2InstanceType }} \
-                                --master-size={{ ec2InstanceType }} \
+                                --node-size={{ cluster.ec2_node_type }} \
+                                --master-size={{ cluster.ec2_node_type }} \
                                 --state=s3://{{ s3.bucket }}"
   ignore_errors: yes

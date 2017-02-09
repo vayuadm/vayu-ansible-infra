@@ -2,15 +2,15 @@
 # tasks file for kops
 - include: create_cluster.yaml
   tags:
-    - "create"
-    - "kops-create"
+    - create
+    - kops-create
 
 - include: apply_cluster_creation.yaml
   tags:
-    - "create"
-    - "kops-create"
+    - create
+    - kops-create
 
 - include: delete_cluster.yaml
   tags:
-    - "destroy"
-    - "kops-destroy"
+    - destroy
+    - kops-destroy

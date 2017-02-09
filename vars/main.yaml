@@ -1,15 +1,18 @@
 ---
-# vars for aws infrastructure
+# vars for aws & kops infrastructure
 region: "us-east-2"
-ec2KeyName: "secret-key"
-ec2InstanceType: "t2.medium"
+ec2_key_name: "secret-key"
+
+cluster:
+  num_of_nodes: 2
+  ec2_node_type: "t2.medium"
 
 s3:
-  bucket: "s3.ceribro.vayu.io"
+  bucket: "s3.ceribro.vayu.team"
 
 route53:
   zone:
-    DNS: "vayu.io"
+    DNS: "vayu.team"
     comment: "Some comment for the DNS zone"
 
   record:

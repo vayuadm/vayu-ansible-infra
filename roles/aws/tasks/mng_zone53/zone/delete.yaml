@@ -1,5 +1,0 @@
----
-- name: "Delete a DNS zone"
-  route53_zone:
-    state: absent
-    zone: "{{ zone_name }}"

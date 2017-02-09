@@ -1,0 +1,3 @@
+---
+- name: "Get an available zone from aws"
+  command: "aws ec2 describe-availability-zones"

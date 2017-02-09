@@ -1,8 +1,0 @@
----
-- name: "Create a new DNS record"
-  route53:
-    command: create
-    zone: "{{ zone_name }}"
-    record: "{{ record_name }}"
-    type: "{{ record_type }}"
-    value: "{{ record_value }}"
