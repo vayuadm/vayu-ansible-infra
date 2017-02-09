@@ -8,11 +8,11 @@ cluster:
   ec2_node_type: "t2.medium"
 
 s3:
-  bucket: "s3.ceribro.vayu.team"
+  bucket: "s3.ceribro.vayu.io"
 
 route53:
   zone:
-    DNS: "vayu.team"
+    DNS: "vayu.io"
     comment: "Some comment for the DNS zone"
 
   record:

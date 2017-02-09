@@ -1,0 +1,12 @@
+---
+- name: "Get all availability zones from aws for region {{ ec2_region }}"
+  command: "aws ec2 describe-availability-zones --region {{ ec2_region }} --filters Name=state,Values=available"
+  register: aws_cmd
+
+- name: "Register one of the zones as an environment variable"
+  set_fact:
+    aws_avail_zone: "{{(aws_cmd.stdout|from_json).AvailabilityZones[0].ZoneName}}"
+
+# - name: print zone
+#   debug:
+#     msg: "{{ aws_avail_zone }}"

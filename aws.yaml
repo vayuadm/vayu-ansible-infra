@@ -7,9 +7,6 @@
     - vars/main.yaml
 
   vars:
-    roles_order:
-      - aws
-      - kops
     reverse_order: False
 
   pre_tasks:
@@ -28,5 +25,3 @@
     - role: aws
     - role: kops
       when: reverse_order == False
-
-# TODO: HANDLE ROLES ORDER WHEN CREATING/DESTROYING
