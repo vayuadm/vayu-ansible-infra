@@ -1,0 +1,25 @@
+---
+- name: "Expose {{ item.deployment_name }} to the WEB"
+  set_fact:
+    service_file: "temp/{{ route53.zone.DNS }}/{{ item.deployment_name }}-ext-service.yaml"
+
+- name: "Create a service config file"
+  template:
+    src: k8s_service.yaml
+    dest: "{{ service_file }}"
+  vars:
+    lb_type: LoadBalancer
+    identifier: ext-service
+    is_external: True
+
+- name: "Create an ELB to expose the service"
+  command: "kubectl create -f {{ service_file }} --record"
+
+# - name: "Create a new DNS record"
+#   route53:
+#     command: create
+#     alias: True
+#     zone: "{{ expose.DNS }}"
+#     record: "{{ expose.subDNS }}"
+#     type: "A"
+#     value: "{{ record_value }}"

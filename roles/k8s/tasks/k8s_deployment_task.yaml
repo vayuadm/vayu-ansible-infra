@@ -1,0 +1,23 @@
+---
+- name: "Deploy {{ item.deployment_name }} to cluster"
+  set_fact:
+    deployment_file: temp/{{ route53.zone.DNS }}/{{ item.deployment_name }}-deployment.yaml
+    service_file: "temp/{{ route53.zone.DNS }}/{{ item.deployment_name }}-service.yaml"
+
+- name: "Create a deployment config file"
+  template:
+    src: k8s_deployment.yaml
+    dest: "{{ deployment_file }}"
+
+- name: "Create a service config file"
+  template:
+    src: k8s_service.yaml
+    dest: "{{ service_file }}"
+  vars:
+    identifier: service
+
+- name: "Create a new k8s Deployment for {{ item.deployment_name }}"
+  command: "kubectl create -f {{ deployment_file }} --record"
+
+- name: "Create a new k8s Service for {{ item.deployment_name }}"
+  command: "kubectl create -f {{ service_file }} --record"

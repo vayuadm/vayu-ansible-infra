@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ item.deployment_name }}-{{ identifier }}
+  namespace: {{ item.namespace | default('default') }}
+  labels:
+    app-svc: {{ item.deployment_name }}-{{ identifier }}
+spec:
+  type: {{ lb_type | default('ClusterIP')}}
+{% if item.labels is defined and is_external is undefined or is_external == False %}
+  selector:
+{% for selector in item.labels %}
+    {{ selector.key }}: {{ selector.value }}
+{% endfor %}
+{% endif %}
+{% if is_external is defined and is_external == True %}
+#if external service
+  selector:
+    app-svc: {{ item.deployment_name }}-service
+{% endif %}
+  ports:
+{% for container in item.containers %}
+{% for port in container.ports %}
+  - port: {{ port.port | default(port) }}
+{% if is_external is undefined or is_external == False %}
+    targetPort: {{ port.targetPort | default(port.port) | default(port)}}
+{% elif is_external is defined and is_external == True %}
+    targetPort: {{ port.port | default(port) }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% if item.source_ranges is defined %}
+  loadBalancerSourceRanges:
+{% for addr in item.source_ranges %}
+    - {{ addr }}
+{% endfor %}
+{% endif %}

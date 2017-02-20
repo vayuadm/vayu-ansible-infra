@@ -1,0 +1,9 @@
+---
+- name: "Create NGinx configuration map"
+  command: "kubectl create configmap nginx-configmap --from-file={{ role_path }}/files/default.conf"
+
+- name: "Create NGinx proxy RC in AWS cluster"
+  command: "kubectl create -f {{ role_path }}/files/nginx_rc.yaml --record"
+
+- name: "Create NGinx proxy service in AWS cluster"
+  command: "kubectl create -f {{ role_path }}/files/nginx_service.yaml --record"

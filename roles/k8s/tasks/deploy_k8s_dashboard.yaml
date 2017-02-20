@@ -1,0 +1,4 @@
+---
+
+- name: "Deploy k8s dashboard in AWS cluster"
+  command: "kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml --record"

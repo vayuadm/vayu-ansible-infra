@@ -1,5 +1,6 @@
 ---
 # vars for aws & kops infrastructure
+# kops will create {{ num_of_nodes }} worker instances + 1 master instance
 region: "us-east-2"
 ec2_key_name: "secret-key"
 
@@ -8,14 +9,14 @@ cluster:
   ec2_node_type: "t2.medium"
 
 s3:
-  bucket: "s3.ceribro.vayu.io"
+  bucket: "s3.k8s.ceribro.io"
 
 route53:
   zone:
-    DNS: "vayu.io"
+    DNS: "ceribro.io"
     comment: "Some comment for the DNS zone"
 
   record:
-    subDNS: "ceribro"
+    subDNS: "k8s"
     type: "A"
     value: "127.0.0.1"

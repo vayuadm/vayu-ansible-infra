@@ -1,2 +1,18 @@
 ---
 # tasks file for k8s
+- name: "Delete old config files"
+  file:
+    path: "temp/{{ route53.zone.DNS }}"
+    state: absent
+
+- name: "Create temp directory for generated config files"
+  file:
+    path: "temp/{{ route53.zone.DNS }}"
+    state: directory
+
+- include: k8s_deployment_task.yaml
+  with_items: "{{ deployments }}"
+
+- include: k8s_expose_service_with_dns.yaml
+  with_items: "{{ deployments }}"
+  when: item.expose is defined
