@@ -7,6 +7,7 @@ ec2_key_name: "secret-key"
 cluster:
   num_of_nodes: 2
   ec2_node_type: "t2.medium"
+  ec2_spot_instance_type: "m4.large"
 
 s3:
   bucket: "s3.k8s.ceribro.io"

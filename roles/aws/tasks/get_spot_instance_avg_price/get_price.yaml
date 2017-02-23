@@ -1,0 +1,33 @@
+---
+
+- name: "Start date for price history"
+  set_fact:
+    start_date: "{{ ansible_date_time.year }}-{{ (ansible_date_time.month | int) - 1  }}-1"
+  when: ansible_date_time.month > 1
+
+- name: "Start date for price history"
+  set_fact:
+    start_date: "{{ (ansible_date_time.year | int) - 1 }}-12-1"
+  when: ansible_date_time.month == 1
+
+- name: "Get the average spot price in the last month {{ start_date }}"
+  command: "aws ec2 \
+            describe-spot-price-history --region {{ region }} \
+            --instance-types {{ instance_types }} \
+            --product-description Linux/UNIX \
+            --start-time {{ start_date }} \
+            --end-time {{ ansible_date_time.date }}"
+  register: aws_output
+
+- name: "Extract prices array from respond"
+  set_fact:
+    prices: "{{ aws_output.stdout|from_json|json_query('SpotPriceHistory[*].SpotPrice') }}"
+
+- name: "Calculate min & avg prices"
+  set_fact:
+    spot_avg_price: "{{ (prices | map('float') | sum(start=0)) / (prices | length) }}"
+    spot_min_price: "{{(prices | min)}}"
+
+- name: "Calculate average"
+  debug:
+    msg: "AVG={{ spot_avg_price }}, MIN: {{ spot_min_price }}"

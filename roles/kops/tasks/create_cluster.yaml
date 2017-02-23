@@ -12,5 +12,18 @@
                                 --master-zones={{ aws_avail_zone }} \
                                 --node-size={{ cluster.ec2_node_type }} \
                                 --master-size={{ cluster.ec2_node_type }} \
-                                --state=s3://{{ s3.bucket }}"
-  ignore_errors: yes
+                                --topology=private \
+                                --networking=calico \
+                                --state=s3://{{ s3.bucket }} \
+                                --bastion"
+
+- include: roles/aws/tasks/get_spot_instance_avg_price/get_price.yaml
+  vars:
+    instance_types: "{{ cluster.ec2_spot_instance_type }}"
+
+- include: change_ig_to_spot.yaml
+  vars:
+    ig_group: "{{ item }}"
+  with_items:
+    - "master-{{ aws_avail_zone }}"
+    - "nodes"

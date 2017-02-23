@@ -1,0 +1,42 @@
+---
+- name: "Change ig {{ ig_group }} to Spot Instance"
+  set_fact:
+    ig_group_config_file: "temp/{{ route53.zone.DNS }}/ig_{{ ig_group }}_config.yaml"
+
+- name: "Get Instance Groups configs"
+  command: "kops get ig {{ ig_group }} \
+                        --name={{ route53.record.subDNS }}.{{ route53.zone.DNS }} \
+                        --state=s3://{{ s3.bucket }} \
+                        -o yaml"
+  register: ig_yaml
+
+- name: "Save configurations"
+  copy:
+    dest: "{{ ig_group_config_file }}"
+    content: "{{ ig_yaml.stdout }}"
+
+- name: "Apply changes to config file"
+  lineinfile:
+    dest: "{{ ig_group_config_file }}"
+    insertafter: 'spec:'
+    line: "  maxPrice: \"{{ spot_avg_price }}\""
+
+- name: "Apply changes to config file"
+  lineinfile:
+    dest: "{{ ig_group_config_file }}"
+    regexp: 'machineType: '
+    line: "  machineType: {{ cluster.ec2_spot_instance_type }}"
+
+- name: "Apply changes to config file"
+  lineinfile:
+    dest: "{{ ig_group_config_file }}"
+    state: absent
+    regexp: "{{ item }}"
+  with_items:
+    - 'creationTimestamp'
+
+- name: "Change instance types to spot instances if in DEV"
+  command: "kops replace \
+                          --name={{ route53.record.subDNS }}.{{ route53.zone.DNS }} \
+                          --state=s3://{{ s3.bucket }} \
+                          -f={{ ig_group_config_file }}"

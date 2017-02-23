@@ -10,9 +10,14 @@
     path: "temp/{{ route53.zone.DNS }}"
     state: directory
 
+- include: deploy_k8s_dashboard.yaml
+  tags: dashboard
+
 - include: k8s_deployment_task.yaml
   with_items: "{{ deployments }}"
+  tags: deployments
 
 - include: k8s_expose_service_with_dns.yaml
   with_items: "{{ deployments }}"
   when: item.expose is defined
+  tags: deployments
