@@ -52,6 +52,6 @@ deployments:
         # env_vars:
         #   - name:
         #     value:
-    expose:
+    # expose:
       # DNS:
-      subDNS: hello-world
+      # subDNS: hello-world

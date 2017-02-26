@@ -1,13 +1,16 @@
 ---
 # vars for aws & kops infrastructure
 # kops will create {{ num_of_nodes }} worker instances + 1 master instance
+environment: "dev"
 region: "us-east-2"
 ec2_key_name: "secret-key"
+spot_bid_ratio: 1.2
 
 cluster:
   num_of_nodes: 2
   ec2_node_type: "t2.medium"
   ec2_spot_instance_type: "m4.large"
+  bastion: true
 
 s3:
   bucket: "s3.k8s.ceribro.io"

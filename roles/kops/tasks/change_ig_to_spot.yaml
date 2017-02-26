@@ -19,7 +19,7 @@
   lineinfile:
     dest: "{{ ig_group_config_file }}"
     insertafter: 'spec:'
-    line: "  maxPrice: \"{{ spot_avg_price }}\""
+    line: "  maxPrice: \"{{ (spot_avg_price | float) * spot_bid_ratio }}\""
 
 - name: "Apply changes to config file"
   lineinfile:

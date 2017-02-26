@@ -3,8 +3,8 @@
   vars:
     ec2_region: "{{ region }}"
 
-- name: "Build cluster configuration in zone {{ aws_avail_zone }}"
-  command: "kops create cluster {{ route53.record.subDNS }}.{{ route53.zone.DNS }} \
+- set_fact:
+    create_command: "kops create cluster {{ route53.record.subDNS }}.{{ route53.zone.DNS }} \
                                 --cloud=aws \
                                 --ssh-public-key=keys/{{ region }}/{{ ec2_key_name }}.pub \
                                 --node-count={{ cluster.num_of_nodes }} \
@@ -15,11 +15,22 @@
                                 --topology=private \
                                 --networking=calico \
                                 --state=s3://{{ s3.bucket }} \
-                                --bastion"
+                                {% if cluster.bastion == True %} --bastion {% endif %}"
+
+- block:
+    - name: "Build cluster configuration in zone {{ aws_avail_zone }}"
+      command: "{{ create_command }}"
+    # register: cluster_cmd
+  rescue:
+    - include: delete_cluster.yaml
+    - name: "Try to create the cluster again"
+      command: "{{ create_command }}"
+
 
 - include: roles/aws/tasks/get_spot_instance_avg_price/get_price.yaml
   vars:
     instance_types: "{{ cluster.ec2_spot_instance_type }}"
+  when: environment == "dev"
 
 - include: change_ig_to_spot.yaml
   vars:
@@ -27,3 +38,4 @@
   with_items:
     - "master-{{ aws_avail_zone }}"
     - "nodes"
+  when: environment == "dev"
