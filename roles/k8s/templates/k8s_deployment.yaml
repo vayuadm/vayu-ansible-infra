@@ -31,6 +31,9 @@ spec:
         ports:
 {% for port in container.ports %}
         - containerPort: {{ port.targetPort | default(port.port) | default(port) }}
+{% if port.name is defined %}
+          name: {{ port.name }}
+{% endif %}
 {% endfor %}
 {% if container.env_vars is defined %}
         env:
@@ -53,6 +56,7 @@ spec:
       - name: {{ item.volumes.name }}
         {{ item.volumes.type }}: {% if item.volumes.fields is undefined %}{{ item.volumes.value }}{% endif %}
 {% if item.volumes.fields is defined %}
+
 {% for field in item.volumes.fields %}
           {{ field.key }}: {{ field.value }}
 {% endfor %}

@@ -2,22 +2,27 @@
 # tasks file for k8s
 - name: "Delete old config files"
   file:
-    path: "temp/{{ route53.zone.DNS }}"
+    path: "temp/{{ route53.zone.DNS }}/deployments"
     state: absent
 
 - name: "Create temp directory for generated config files"
   file:
-    path: "temp/{{ route53.zone.DNS }}"
+    path: "temp/{{ route53.zone.DNS }}/deployments"
     state: directory
 
 - include: deploy_k8s_dashboard.yaml
   tags: dashboard
 
+# - name: "Create NGinx configmap"
+#   command: "kubectl create configmap nginx-configmap --from-file={{ role_path }}/files/default.conf"
+#   tags: configmaps
+
 - include: k8s_deployment_task.yaml
   with_items: "{{ deployments }}"
   tags: deployments
+  when: item.deploy is defined and item.deploy == True
 
-- include: k8s_expose_service_with_dns.yaml
-  with_items: "{{ deployments }}"
-  when: item.expose is defined
-  tags: deployments
+# - include: k8s_expose_service_with_dns.yaml
+#   with_items: "{{ deployments }}"
+#   when: item.expose is defined
+#   tags: deployments

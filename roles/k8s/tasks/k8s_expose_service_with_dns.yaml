@@ -1,7 +1,7 @@
 ---
 - name: "Expose {{ item.deployment_name }} to the WEB"
   set_fact:
-    service_file: "temp/{{ route53.zone.DNS }}/{{ item.deployment_name }}-ext-service.yaml"
+    service_file: "temp/{{ route53.zone.DNS }}/deployments/{{ item.deployment_name }}-ext-service.yaml"
 
 - name: "Create a service config file"
   template:
@@ -12,9 +12,17 @@
     identifier: ext-service
     is_external: True
 
-- name: "Create an ELB to expose the service"
-  command: "kubectl create -f {{ service_file }} --record"
+# - name: "Create an ELB to expose the service"
+#   command: "kubectl create -f {{ service_file }} --record"
 
+- block:
+    - name: "Create an ELB to expose the service"
+      command: "kubectl create -f {{ service_file }} --record"
+  rescue:
+    - name: "Delete old ELB"
+      command: "kubectl delete -f {{ service_file }}"
+    - name: "Try to deploy ELB again"
+      command: "kubectl create -f {{ service_file }} --record"
 # - name: "Create a new DNS record"
 #   route53:
 #     command: create
