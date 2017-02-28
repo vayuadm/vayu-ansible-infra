@@ -8,4 +8,4 @@ machine:
     ANSIBLE_CLIENT_IMAGE_NAME: vayuadm/vayu-ansible-client
 test:
   override:
-    - ./script/runplaybook.sh $ACTION
+    - echo hi
