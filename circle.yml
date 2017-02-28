@@ -1,0 +1,12 @@
+machine:
+  pre:
+    - sudo curl -L -o /usr/bin/docker 'https://s3-external-1.amazonaws.com/circle-downloads/docker-1.9.1-circleci'
+    - sudo chmod 0755 /usr/bin/docker
+  services:
+    - docker
+  environment:
+    ANSIBLE_CLIENT_IMAGE_NAME: vayuadm/vayu-ansible-client
+test:
+  override:
+    - [[ "${ACTION}" == "destroy" ]] && echo hidadddddd..........
+    # aws.yaml --tags "destroy"
