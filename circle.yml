@@ -8,5 +8,4 @@ machine:
     ANSIBLE_CLIENT_IMAGE_NAME: vayuadm/vayu-ansible-client
 test:
   override:
-    - [[ "${ACTION}" == "destroy" ]] && echo hidadddddd..........
-    # aws.yaml --tags "destroy"
+    - echo hi
