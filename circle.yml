@@ -6,4 +6,4 @@ machine:
     - docker
 test:
   override:
-    - ./script/runplaybook.sh $ACTION
+    - ./script/runplaybook.sh $ANSIBLE_ACTION
