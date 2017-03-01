@@ -1,5 +1,7 @@
 # Vayu Infra - Ansible
 
+[![CircleCI](https://circleci.com/gh/vayuadm/vayu-ansible-infra.svg?style=svg)](https://circleci.com/gh/vayuadm/vayu-ansible-infra)
+
 You can find here Ansible playbooks for Infrastructure purposes.
 
 ---
