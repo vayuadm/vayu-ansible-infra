@@ -6,3 +6,4 @@ temp
 *.pem
 
 .boto
+*.log
