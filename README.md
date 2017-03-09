@@ -1,5 +1,7 @@
 # Vayu Infra - Ansible
 
+[![CircleCI](https://circleci.com/gh/vayuadm/vayu-ansible-infra.svg?style=svg)](https://circleci.com/gh/vayuadm/vayu-ansible-infra)
+
 You can find here Ansible playbooks for Infrastructure purposes.
 
 ---
@@ -42,7 +44,7 @@ This playbook will create/destroy an AWS cluster infrastructure & deploy k8n on 
 ```aws
 [default]
 aws_access_key_id = AWS_ACCESS_KEY
-aws_secret_access_key = AWS_ACESS_SECRET
+aws_secret_access_key = AWS_ACCESS_SECRET
 ```
 
 **Also note that this playbook creates the environment in AWS according to the configuration file in the project directory under `./vars/main.yaml`**

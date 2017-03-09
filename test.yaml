@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  connection: local
+  become: false
+
+  tasks:
+    - name: "describe availability zones"
+      command: aws ec2 describe-availability-zones --region us-east-2
