@@ -1,6 +1,37 @@
 ---
 - name: "Remove SSH key from known hosts"
-  command: "ssh-keygen -R api.{{ route53.record.subDNS }}.{{ route53.zone.DNS }}"
+  known_hosts:
+    name: "api.{{ route53.record.subDNS }}.{{ route53.zone.DNS }}"
+    state: absent
+  # command: "ssh-keygen -R api.{{ route53.record.subDNS }}.{{ route53.zone.DNS }}"
+
+- name: "Get all DNS zones"
+  route53_facts:
+    query: hosted_zone
+  register: dns_check
+
+- name: "Check if cluster zone exists"
+  with_items: "{{ dns_check|json_query(dns_name_host_id_query) }}"
+  vars:
+    dns_name_host_id_query: "HostedZones[?Name=='{{ route53.zone.DNS }}.']"
+  set_fact:
+    dns_zone: "{{ item }}"
+
+- name: "Get {{ dns_zone.Name }} record sets"
+  route53_facts:
+    query: record_sets
+    hosted_zone_id: "{{ dns_zone.Id }}"
+  register: dns_record_sets
+  when: dns_zone is defined
+
+- name: "Check if cluster record set exists"
+  with_items: "{{ dns_record_sets|json_query(record_name_query) }}"
+  vars:
+    record_name_query: "ResourceRecordSets[?Name=='{{ route53.record.subDNS }}.{{ route53.zone.DNS }}.']"
+  set_fact:
+    dns_record: "{{ item }}"
+  when: dns_record_sets is defined
 
 - name: "Destroy the cluster in AWS"
-  command: "kops delete cluster --yes {{ route53.record.subDNS }}.{{ route53.zone.DNS }} --state=s3://{{ s3.bucket }}"
+  command: "kops delete cluster {{ route53.record.subDNS }}.{{ route53.zone.DNS }} --state=s3://{{ s3.bucket }}"
+  when: dns_record is defined
