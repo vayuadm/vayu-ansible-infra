@@ -1,13 +1,28 @@
 - hosts: localhost
   connection: local
   become: false
-  gather_facts: false
 
   tasks:
+    - name: "Load logfile"
+      set_fact:
+        logfile: "{{ lookup('file', './ansible.log') }}"
+        run_status: good
+      failed_when: logfile is undefined
+
+    - name: "Check playbook status from logfile"
+      set_fact:
+        run_status: danger
+      when: "'FAILED!' in logfile"
+
     - name: "Publish run results to slack"
       slack:
         username: ansible-bot
-        token: 
+        token: lookup('env', 'SLACK_TOKEN')
         msg: "{{ logfile }}"
-      vars:
-        logfile: "{{ lookup('file', './ansible.log') }}"
+        color: "{{ run_status }}"
+
+  post_tasks:
+    - name: "Delete logfile"
+      file:
+        path: ./ansible.log
+        state: absent
