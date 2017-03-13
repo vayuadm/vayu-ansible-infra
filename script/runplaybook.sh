@@ -2,14 +2,20 @@
 # available actions: create, destroy, kops-create, kops-destroy, aws-create, aws-destroy
 
 runPlaybook() {
-    echo running ansible playbook action: "$1"
-    if [ -z "$1" ]
+    if [ -z "$2" ]
     then
+      echo Running ansible test playbook
       docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client test.yaml
     else
-      docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client aws.yaml --tags "$1"
+      echo Running ansible playbook action: "$2"
+      docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client aws.yaml --tags "$2"
     fi
-    docker run -it -e SLACK_TOKEN="$2" -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client slack-publish.yaml
+
+    if [ -z "$1" ]
+    then
+      echo Publishing results to Slack
+      docker run -it -e SLACK_TOKEN="$1" -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client slack-publish.yaml
+    fi
 }
 
 runPlaybook $1

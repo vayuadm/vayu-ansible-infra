@@ -6,4 +6,4 @@ machine:
     - docker
 test:
   override:
-    - ./script/runplaybook.sh $ANSIBLE_ACTION $SLACK_TOKEN
+    - ./script/runplaybook.sh $SLACK_TOKEN $ANSIBLE_ACTION
