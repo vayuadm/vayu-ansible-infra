@@ -18,4 +18,4 @@ runPlaybook() {
     fi
 }
 
-runPlaybook $1
+runPlaybook $1 $2
