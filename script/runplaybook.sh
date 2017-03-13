@@ -11,7 +11,7 @@ runPlaybook() {
       docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client aws.yaml --tags "$2"
     fi
 
-    if [ -z "$1" ]
+    if [ ! -z "$1" ]
     then
       echo Publishing results to Slack
       docker run -it -e SLACK_TOKEN="$1" -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client slack-publish.yaml
