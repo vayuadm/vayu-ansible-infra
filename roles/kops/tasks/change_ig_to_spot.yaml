@@ -1,7 +1,7 @@
 ---
 - name: "Change ig {{ ig_group }} to Spot Instance"
   set_fact:
-    ig_group_config_file: "temp/{{ route53.zone.DNS }}/ig_{{ ig_group }}_config.yaml"
+    ig_group_config_file: "temp/{{ route53.zone.DNS }}/configs/ig_{{ ig_group }}_config.yaml"
 
 - name: "Get Instance Groups configs"
   command: "kops get ig {{ ig_group }} \

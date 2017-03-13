@@ -12,9 +12,6 @@
     identifier: ext-service
     is_external: True
 
-# - name: "Create an ELB to expose the service"
-#   command: "kubectl create -f {{ service_file }} --record"
-
 - block:
     - name: "Create an ELB to expose the service"
       command: "kubectl create -f {{ service_file }} --record"
