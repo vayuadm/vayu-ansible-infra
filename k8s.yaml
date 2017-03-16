@@ -6,5 +6,23 @@
   vars_files:
     - vars/main.yaml
 
+  pre_tasks:
+    - name: "Init deployments array"
+      set_fact:
+        k8s_deployment_files: []
+        cluster_deployments: []
+
+    - name: "Find deployments config files"
+      set_fact:
+        k8s_deployment_files: "{{ k8s_deployment_files + [item] }}"
+      with_fileglob: "vars/deployments/*"
+
+    - name: "Load deployment files"
+      set_fact:
+        cluster_deployments: "{{ cluster_deployments + lookup('file', item)|from_yaml }}"
+      with_items: "{{ k8s_deployment_files }}"
+
   roles:
     - role: k8s
+      vars:
+        deployments: "{{ cluster_deployments }}"

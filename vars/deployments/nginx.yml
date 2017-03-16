@@ -1,0 +1,30 @@
+---
+- deployment_name: nginx-proxy
+  deploy: true
+  namespace: default
+  num_of_replicas: 1
+  labels:
+    - key: k8s-app
+      value: nginx-proxy
+    - key: environment
+      value: dev
+  volumes:
+    name: nginx-configmap
+    type: configMap
+    fields:
+      - key: name
+        value: nginx-configmap
+  containers:
+    - container_name: nginx-proxy
+      deployment_image: nginx
+      deployment_tag: latest
+      ports:
+        - port: 80
+          name: http
+        - port: 443
+          name: https
+      volume_mounts:
+        - name: nginx-configmap
+          path: /etc/nginx/conf.d
+  expose:
+    subDNS: proxy
