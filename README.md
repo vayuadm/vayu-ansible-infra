@@ -81,8 +81,8 @@ Removes all infrastructure
 curl -X POST https://circleci.com/api/v1.1/project/github/vayuadm/vayu-ansible-infra?circle-token=$TOKEN -data "{"build_parameters":{"ANSIBLE_ACTION": $ACTION}}"
 ```
 ACTION: 
-    create  - creates Vayu cluster on AWS
-    destroy - remove Vayu cluster from AWS
-    empty   - runs project's test playbook
+* create  - creates Vayu cluster on AWS
+* destroy - remove Vayu cluster from AWS
+* empty   - runs project's test playbook
     
 TOKEN: CircleCI secret
