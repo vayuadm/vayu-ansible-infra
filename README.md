@@ -35,13 +35,12 @@ usage:
 ```shell
 ~/retina-ansible-kops$ sudo ansible-playbook provision.yaml --tags "apt,pip"
 ```
-
 ---
 ## Ansible - AWS/kops infrastructure management for k8s
 This playbook will create/destroy an AWS cluster infrastructure & deploy k8n on nodes
 <BR />
 **Please note that your aws credentials must resign in `~/.aws/credentials`, the file structure is as such:**
-```aws
+``` aws
 [default]
 aws_access_key_id = AWS_ACCESS_KEY
 aws_secret_access_key = AWS_ACCESS_SECRET
@@ -75,3 +74,15 @@ Removes all aws related infrastructure
 Removes all kops related infrastructure
 #### `ansible-playbook aws.yaml --tags "destroy"` ####
 Removes all infrastructure
+
+---
+#### Running Ansible playbooks as CircleCI build using CircleCI API ####
+``` bash 
+curl -X POST https://circleci.com/api/v1.1/project/github/vayuadm/vayu-ansible-infra?circle-token=$TOKEN -data "{"build_parameters":{"ANSIBLE_ACTION": $ACTION}}"
+```
+ACTION: 
+    create  - creates Vayu cluster on AWS
+    destroy - remove Vayu cluster from AWS
+    empty   - runs project's test playbook
+    
+TOKEN: CircleCI secret
