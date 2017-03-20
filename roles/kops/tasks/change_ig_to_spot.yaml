@@ -1,4 +1,9 @@
 ---
+- name: "Create temp directory for generated config files"
+  file:
+    path: "temp/{{ route53.zone.DNS }}/configs"
+    state: directory
+
 - name: "Change ig {{ ig_group }} to Spot Instance"
   set_fact:
     ig_group_config_file: "temp/{{ route53.zone.DNS }}/configs/ig_{{ ig_group }}_config.yaml"
