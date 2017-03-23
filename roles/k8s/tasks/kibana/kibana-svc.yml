@@ -13,4 +13,5 @@ spec:
   ports:
   - name: http
     port: 5601
+    nodePort: 31000
     protocol: TCP

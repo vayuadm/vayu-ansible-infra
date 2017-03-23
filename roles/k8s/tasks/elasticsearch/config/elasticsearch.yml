@@ -4,6 +4,9 @@ cluster:
 bootstrap:
   memory_lock: true
 
-http.host: 0.0.0.0
+http:
+  enabled: true
+  compression: true
+  host: 0.0.0.0
 
-transport.host: 127.0.0.1
+network.host: 0.0.0.0

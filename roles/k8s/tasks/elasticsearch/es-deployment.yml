@@ -28,12 +28,12 @@ spec:
       containers:
       - name: es
         securityContext:
-          privileged: false
+          privileged: true
           capabilities:
             add:
               - IPC_LOCK
               - SYS_RESOURCE
-        image: docker.elastic.co/elasticsearch/elasticsearch:5.2.2
+        image: vayuadm/es-kube
         env:
         - name: "ES_JAVA_OPTS"
           value: "-Xms256m -Xmx256m"
