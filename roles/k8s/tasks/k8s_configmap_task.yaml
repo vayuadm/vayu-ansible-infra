@@ -1,0 +1,4 @@
+---
+
+- name: "Create a new k8s configmap"
+  command: "kubectl create configmap {{ configmap_name }} --from-file={{ configmap_path }}"

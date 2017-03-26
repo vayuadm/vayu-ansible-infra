@@ -1,0 +1,12 @@
+cluster:
+  name: esvayu
+
+bootstrap:
+  memory_lock: true
+
+http:
+  enabled: true
+  compression: true
+  host: 0.0.0.0
+
+network.host: 0.0.0.0
