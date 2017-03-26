@@ -11,6 +11,7 @@ cluster:
   ec2_node_type: "t2.medium"
   ec2_spot_instance_type: "m4.large"
   bastion: true
+  configmap_name: "ceribro-config"
 
 s3:
   bucket: "s3.k8s.ceribro.io"

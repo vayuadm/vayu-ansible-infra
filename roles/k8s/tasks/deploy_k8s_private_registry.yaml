@@ -1,8 +1,0 @@
----
-
-- name: "Create k8s RC for private registry in AWS cluster"
-  command: "kubectl create -f {{ role_path }}/files/registry_rc.yaml --record"
-
-
-- name: "Create k8s Service for private registry in AWS cluster"
-  command: "kubectl create -f {{ role_path }}/files/registry_service.yaml --record"
