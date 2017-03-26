@@ -7,7 +7,6 @@
       set_fact:
         logfile: "{{ lookup('file', './ansible.log') }}"
         run_status: good
-      debug: msg="logfile: '{{ logfile }}'"
       failed_when: logfile is undefined
 
     - name: "Check playbook status from logfile"
