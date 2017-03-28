@@ -2,10 +2,14 @@
 - include: k8s_deployment_task.yaml
   vars:
     deployments_path: "vars/deployments"
-  tags: deployments
+  tags:
+      - create
+      - deployments
 
 - include: k8s_configmap_task.yaml
   vars:
     configmap_name: "{{ cluster.configmap_name }}"
     configmap_path: "vars/configmaps"
-  tags: deployments
+  tags:
+    - create
+    - deployments
