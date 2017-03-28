@@ -12,10 +12,12 @@
                                 --master-zones={{ aws_avail_zone }} \
                                 --node-size={{ cluster.ec2_node_type }} \
                                 --master-size={{ cluster.ec2_node_type }} \
-                                --topology=private \
-                                --networking=calico \
                                 --state=s3://{{ s3.bucket }} \
-                                {% if cluster.bastion == True %} --bastion {% endif %}"
+                                {% if cluster.bastion == True %} 
+                                --bastion \
+                                --topology=private \
+                                --networking=calico
+                                 {% endif %}"
 
 - block:
     - name: "Build cluster configuration in zone {{ aws_avail_zone }}"

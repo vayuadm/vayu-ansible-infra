@@ -15,8 +15,3 @@
   vars:
     bucket_name: "{{ s3.bucket }}"
     bucket_region: "{{ region }}"
-
-- include: mng_ec2_keys/create.yaml
-  vars:
-    ec2_region: "{{ region }}"
-    key_name: "{{ ec2_key_name }}"

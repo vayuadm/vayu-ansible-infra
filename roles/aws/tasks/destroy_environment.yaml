@@ -1,10 +1,5 @@
 ---
 
-- include: mng_ec2_keys/delete.yaml
-  vars:
-    ec2_region: "{{ region }}"
-    key_name: "{{ ec2_key_name }}"
-
 - include: mng_s3_bucket/delete.yaml
   vars:
     bucket_name: "{{ s3.bucket }}"

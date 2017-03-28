@@ -19,6 +19,11 @@
       set_fact: reverse_order=True
       tags: destroy
 
+    - include: mng_ec2_keys/create.yaml
+      vars:
+        ec2_region: "{{ region }}"
+        key_name: "{{ ec2_key_name }}"
+
   roles:
     - role: kops
       when: reverse_order == True
@@ -26,3 +31,9 @@
     - role: kops
     - role: k8s
       when: reverse_order == False
+
+  post_tasks:
+    - include: mng_ec2_keys/delete.yaml
+      vars:
+        ec2_region: "{{ region }}"
+        key_name: "{{ ec2_key_name }}"
