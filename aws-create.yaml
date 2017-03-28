@@ -6,18 +6,11 @@
   vars_files:
     - vars/main.yaml
 
-  vars:
-    reverse_order: False
-
   pre_tasks:
     - name: "Check if --tags is provided"
       fail:
-        msg: "You must supply one(!) of the following tags: [create, destroy, aws-create, aws-destroy, kops-create, kops-destroy]"
+        msg: "You must supply one(!) of the following tags: [create, aws-create, kops-create, deployment]"
       when: tags is not defined
-
-    - name: "Reverse the order of roles if in 'destroy' mode"
-      set_fact: reverse_order=True
-      tags: destroy
 
     - include: roles/aws/tasks/mng_ec2_keys/create.yaml
       vars:
@@ -25,12 +18,9 @@
         key_name: "{{ ec2_key_name }}"
 
   roles:
-    - role: kops
-      when: reverse_order == True
     - role: aws
     - role: kops
-    - role: k8s
-      when: reverse_order == False
+    # - role: k8s
 
   post_tasks:
     - include: roles/aws/tasks/mng_ec2_keys/delete.yaml
