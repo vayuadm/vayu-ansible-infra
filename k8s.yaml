@@ -6,35 +6,5 @@
   vars_files:
     - vars/main.yaml
 
-  # pre_tasks:
-  #   - name: "Init k8s array"
-  #     set_fact:g
-  #       k8s_deployment_files: []
-  #       cluster_deployments: []
-  #
-  #   - name: "Find deployments config files"
-  #     set_fact:
-  #       k8s_deployment_files: "{{ k8s_deployment_files + [item] }}"
-  #     with_fileglob: "vars/deployments/*"
-
-    # - name: "Find configmaps files"
-    #   set_fact:
-    #     k8s_configmaps_files: "{{ k8s_configmaps_files + [item] }}"
-    #   with_fileglob: "vars/configmaps/*"
-
-    # - name: "Load deployment files"
-    #   set_fact:
-    #     cluster_deployments: "{{ cluster_deployments + lookup('file', item)|from_yaml }}"
-    #   with_items: "{{ k8s_deployment_files }}"
-
-    # - name: "Load configmaps files"
-    #   set_fact:
-    #     cluster_configmaps: "{{ cluster_configmaps + lookup('file', item)|from_yaml }}"
-    #   with_items: "{{ k8s_configmaps_files }}"
-
-
   roles:
     - role: k8s
-      # vars:
-      #   deployments: "{{ cluster_deployments }}"
-        # configmaps_path: vars/configmaps

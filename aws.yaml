@@ -24,4 +24,5 @@
       when: reverse_order == True
     - role: aws
     - role: kops
+    - role: k8s
       when: reverse_order == False
