@@ -8,4 +8,4 @@
   vars:
     configmap_name: "{{ cluster.configmap_name }}"
     configmap_path: "vars/configmaps"
-  tags: configmaps
+  tags: deployments
