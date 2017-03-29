@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # available actions: create, destroy, kops-create, kops-destroy, aws-create, aws-destroy, deployment
 
 runPlaybook() {
