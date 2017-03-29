@@ -16,6 +16,8 @@
       vars:
         ec2_region: "{{ region }}"
         key_name: "{{ ec2_key_name }}"
+      tags:
+        - always
 
   roles:
     - role: kops
@@ -26,3 +28,5 @@
       vars:
         ec2_region: "{{ region }}"
         key_name: "{{ ec2_key_name }}"
+      tags:
+        - always
