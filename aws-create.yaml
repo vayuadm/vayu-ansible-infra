@@ -20,7 +20,7 @@
   roles:
     - role: aws
     - role: kops
-    # - role: k8s
+    - role: k8s
 
   post_tasks:
     - include: roles/aws/tasks/mng_ec2_keys/delete.yaml
