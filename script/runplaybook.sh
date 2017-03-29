@@ -10,10 +10,6 @@ runPlaybook() {
     then
       echo Running aws-create.yaml playbook action: "$2"
       docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client aws-create.yaml --tags "$2"
-    elif [ "$2" == "deployment" ]
-    then
-      echo Running k8s.yaml playbook action: "$2"
-      docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client k8s.yaml --tags "$2"
     else
       echo Running aws-destroy.yaml playbook action: "$2"
       docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client aws-destroy.yaml --tags "$2"
