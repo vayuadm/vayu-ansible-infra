@@ -1,4 +1,9 @@
 ---
+- include: mng_ec2_keys/create.yaml
+  vars:
+    ec2_region: "{{ region }}"
+    key_name: "{{ ec2_key_name }}"
+
 - include: mng_route53/zone/create.yaml
   vars:
     zone_name: "{{ route53.zone.DNS }}"

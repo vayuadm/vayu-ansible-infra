@@ -1,0 +1,7 @@
+---
+- name: "Download A file from S3-Bucket"
+  s3:
+    bucket: "{{ bucket_name }}"
+    object: "{{ src_file }}"
+    dest: "{{ dest_file }}"
+    mode: get

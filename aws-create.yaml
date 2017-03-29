@@ -12,22 +12,7 @@
         msg: "You must supply one(!) of the following tags: [create, aws-create, kops-create, deployment]"
       when: tags is not defined
 
-    - include: roles/aws/tasks/mng_ec2_keys/create.yaml
-      vars:
-        ec2_region: "{{ region }}"
-        key_name: "{{ ec2_key_name }}"
-      tags:
-        - always
-
   roles:
     - role: aws
     - role: kops
-    - role: k8s
-
-  post_tasks:
-    - include: roles/aws/tasks/mng_ec2_keys/delete.yaml
-      vars:
-        ec2_region: "{{ region }}"
-        key_name: "{{ ec2_key_name }}"
-      tags:
-        - always
+    #- role: k8s

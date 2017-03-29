@@ -1,0 +1,7 @@
+---
+- name: "Upload A file to S3-Bucket"
+  s3:
+    bucket: "{{ bucket_name }}"
+    object: "{{ dest_file }}"
+    src: "{{ src_file }}"
+    mode: put
