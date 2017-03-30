@@ -4,4 +4,6 @@
     bucket: "{{ bucket_name }}"
     object: "{{ dest_file }}"
     src: "{{ src_file }}"
+    permission: "{{ file_permissions | default('private') }}"
+    region: "{{ bucket_region }}"
     mode: put

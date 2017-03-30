@@ -13,7 +13,7 @@
   copy:
     content: "{{ keypair.key.private_key }}"
     dest: "keys/{{ ec2_region }}/{{ key_name }}.pem"
-    mode: 0600
+    mode: 0400
   when: keypair.changed
 
 - name: "Generate a public key"

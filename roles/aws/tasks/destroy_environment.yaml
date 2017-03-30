@@ -12,6 +12,11 @@
     record_type: "{{ route53.record.type }}"
     record_value: "{{ route53.record.value }}"
 
+- include: mng_ec2_keys/delete.yaml
+  vars:
+    ec2_region: "{{ region }}"
+    key_name: "{{ ec2_key_name }}"
+    
 # - include: mng_route53/zone/delete.yaml
 #   vars:
 #     zone_name: "{{ route53.zone.DNS }}"

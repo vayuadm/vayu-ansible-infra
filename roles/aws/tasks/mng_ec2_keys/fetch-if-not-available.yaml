@@ -1,0 +1,23 @@
+---
+- name: "Check if EC2 keys are present on machine"
+  stat:
+    path: "{{ playbook_dir }}/keys/{{ region }}/{{ ec2_key_name }}.pem"
+  register: file_stat
+
+- name: "Create folder for EC2 key"
+  file: "path=keys/{{ region }} state=directory mode=0700"
+  when: file_stat.stat.exists == False
+
+- include: roles/aws/tasks/mng_s3_bucket/download.yaml
+  vars:
+    src_file: "/infra/{{ region }}/{{ ec2_key_name }}.pem"
+    dest_file: "{{ playbook_dir }}/keys/{{ region }}/{{ ec2_key_name }}.pem"
+    bucket_name: "{{ s3.bucket }}"
+  when: file_stat.stat.exists == False
+
+- include: roles/aws/tasks/mng_s3_bucket/download.yaml
+  vars:
+    src_file: "/infra/{{ region }}/{{ ec2_key_name }}.pub"
+    dest_file: "{{ playbook_dir }}/keys/{{ region }}/{{ ec2_key_name }}.pub"
+    bucket_name: "{{ s3.bucket }}"
+  when: file_stat.stat.exists == False

@@ -1,5 +1,7 @@
 ---
 # tasks file for kops
+- include: roles/aws/tasks/mng_ec2_keys/fetch-if-not-available.yaml
+
 - include: create_cluster.yaml
   tags:
     - create
