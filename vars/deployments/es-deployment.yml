@@ -9,7 +9,7 @@ metadata:
 spec:
   template:
     metadata:
-      labels:g
+      labels:
         component: elasticsearch
         role: client
       annotations:

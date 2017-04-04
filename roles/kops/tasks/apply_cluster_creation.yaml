@@ -1,5 +1,5 @@
 ---
 - name: "Create the cluster in AWS"
-  command: "kops update cluster {{ route53.record.subDNS }}.{{ route53.zone.DNS }} \
+  command: "kops update cluster $CLUSTER_NAME \
                                 --state=s3://{{ s3.bucket }} \
                                 --yes"

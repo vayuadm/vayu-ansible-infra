@@ -1,0 +1,27 @@
+---
+# manage AWS environment
+- hosts: ceribro
+  connection: ssh
+  user: admin
+  become: false
+  vars_files:
+    - vars/main.yaml
+  environment:
+    CLUSTER_NAME: "{{ route53.record.subDNS }}.{{ route53.zone.DNS }}"
+
+  pre_tasks:
+    - name: "Check if --tags is provided"
+      fail:
+        msg: "You must supply one(!) of the following tags: [deployment]"
+      when: tags is not defined
+    - name: "Copy configurations to ceribro cluster nodes"
+      copy:
+        src: vars
+        dest: "~/"
+        owner: admin
+        mode: 0400
+      tags:
+        - always
+
+  roles:
+    - role: k8s

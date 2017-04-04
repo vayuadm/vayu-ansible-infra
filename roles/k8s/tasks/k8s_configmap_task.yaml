@@ -1,3 +1,9 @@
 ---
-- name: "Create a new k8s configmap"
-  command: "kubectl create configmap {{ configmap_name }} --from-file={{ configmap_path }}"
+- block:
+  - name: "Create a new k8s configmap"
+    command: "kubectl create configmap {{ configmap_name }} --from-file={{ configmap_path }}"
+  rescue:
+  - name: "Delete a new k8s configmap"
+    command: "kubectl delete configmap {{ configmap_name }}"
+  - name: "Create a new k8s configmap"
+    command: "kubectl create configmap {{ configmap_name }} --from-file={{ configmap_path }}"
