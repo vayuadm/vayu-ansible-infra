@@ -1,7 +1,7 @@
 ---
 - name: "Remove SSH key from known hosts"
   known_hosts:
-    name: "api.{{ route53.record.subDNS }}.{{ route53.zone.DNS }}"
+    name: "api.{{ cluster_name }}"
     state: absent
   # command: "ssh-keygen -R api.{{ route53.record.subDNS }}.{{ route53.zone.DNS }}"
 
@@ -27,11 +27,11 @@
 - name: "Check if cluster record set exists"
   with_items: "{{ dns_record_sets|json_query(record_name_query) }}"
   vars:
-    record_name_query: "ResourceRecordSets[?Name=='{{ route53.record.subDNS }}.{{ route53.zone.DNS }}.']"
+    record_name_query: "ResourceRecordSets[?Name=='{{ cluster_name }}.']"
   set_fact:
     dns_record: "{{ item }}"
   when: dns_record_sets is defined
 
 - name: "Destroy the cluster in AWS"
-  command: "kops delete cluster $CLUSTER_NAME --state=s3://{{ s3.bucket }} --yes"
+  command: "kops delete cluster {{ cluster_name }} --state=s3://{{ s3.bucket }} --yes"
   when: dns_record is defined

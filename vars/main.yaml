@@ -25,3 +25,5 @@ route53:
     subDNS: "k8s"
     type: "A"
     value: "127.0.0.1"
+
+cluster_name: "{{ route53.record.subDNS }}.{{ route53.zone.DNS }}"

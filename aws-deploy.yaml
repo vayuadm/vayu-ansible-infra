@@ -7,7 +7,6 @@
   vars_files:
     - vars/main.yaml
   environment:
-    CLUSTER_NAME: "{{ route53.record.subDNS }}.{{ route53.zone.DNS }}"
 
   pre_tasks:
     - name: "Check if --tags is provided"

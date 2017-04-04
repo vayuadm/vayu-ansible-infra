@@ -4,7 +4,7 @@
     ec2_region: "{{ region }}"
 
 - set_fact:
-    create_command: "kops create cluster $CLUSTER_NAME \
+    create_command: "kops create cluster {{ cluster_name }} \
                                 --cloud=aws \
                                 --ssh-public-key=keys/{{ region }}/{{ ec2_key_name }}.pub \
                                 --node-count={{ cluster.num_of_nodes }} \
