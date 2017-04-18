@@ -11,7 +11,7 @@
   pre_tasks:
     - name: "Check if --tags is provided"
       fail:
-        msg: "You must supply one(!) of the following tags: [deployment]"
+        msg: "You must supply one(!) of the following tags: [deployments]"
       when: tags is not defined
     - name: "Copy configurations to ceribro cluster nodes"
       copy:

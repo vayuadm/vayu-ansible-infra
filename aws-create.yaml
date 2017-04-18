@@ -9,7 +9,7 @@
   pre_tasks:
     - name: "Check if --tags is provided"
       fail:
-        msg: "You must supply one(!) of the following tags: [create, aws-create, kops-create, deployment]"
+        msg: "You must supply one(!) of the following tags: [create, aws-create, kops-create]"
       when: tags is not defined
 
   roles:
