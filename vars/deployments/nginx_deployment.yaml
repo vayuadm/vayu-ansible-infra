@@ -1,9 +1,8 @@
-apiVersion: apps/v1beta1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: nginx-deployment
 spec:
-  replicas: 1
   template: # create pods using pod definition in this template
     metadata:
       # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
@@ -17,20 +16,20 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-          - mountPath: "/etc/nginx/conf.d/nginx-elastic.conf"
-            name: etc-nginx-confd
-            subPath: nginx-elastic.conf
-          - mountPath: "etc/nginx/conf.d/elasticsearch.htpasswd"
-            name: "ceribro-secrets"
-            subPath: elasticsearch.htpasswd
-            readOnly: true
-    volumes:
-      - name: etc-nginx-confd
-        configMap:
-          name: ceribro-config
-          items:
-          - key: nginx-elastic.conf
-            path: nginx-elastic.conf
-      - name: "ceribro-secrets"
-        secret:
-          secretName: "elasticsearch.htpasswd"
+        - name: etc-nginx-confd
+          mountPath: "/etc/nginx/conf.d/nginx-elastic.conf"
+          subPath: nginx-elastic.conf
+        - name: "ceribro-secrets"
+          mountPath: "etc/nginx/conf.d/elasticsearch.htpasswd"
+          subPath: elasticsearch.htpasswd
+          readOnly: true
+      volumes:
+        - name: etc-nginx-confd
+          configMap:
+            name: ceribro-config
+            items:
+            - key: nginx-elastic.conf
+              path: nginx-elastic.conf
+        - name: "ceribro-secrets"
+          secret:
+            secretName: "elasticsearch.htpasswd"

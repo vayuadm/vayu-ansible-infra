@@ -6,6 +6,13 @@
   tags:
     - deployments
 
+- include: k8s_secret_task.yaml
+  vars:
+    configmap_name: "{{ cluster.secret_name }}"
+    configmap_path: "/home/admin/vars/secrets"
+  tags:
+    - deployments
+
 - include: k8s_deployment_task.yaml
   vars:
     deployments_path: "/home/admin/vars/deployments"

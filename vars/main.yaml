@@ -12,6 +12,7 @@ cluster:
   ec2_spot_instance_type: "m4.large"
   bastion: false
   configmap_name: "ceribro-config"
+  secret_name: "ceribro-secret"
 
 s3:
   bucket: "s3.k8s.ceribro.io"
