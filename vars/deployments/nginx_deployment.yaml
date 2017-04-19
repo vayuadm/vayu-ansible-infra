@@ -20,6 +20,9 @@ spec:
           - mountPath: "/etc/nginx/conf.d/nginx-elastic.conf"
             name: etc-nginx-confd
             subPath: nginx-elastic.conf
+          - mountPath: "etc/nginx/secrets"
+            name: "secrets"
+            readOnly: true
     volumes:
       - name: etc-nginx-confd
         configMap:
@@ -27,3 +30,6 @@ spec:
           items:
           - key: nginx-elastic.conf
             path: nginx-elastic.conf
+      - name: "secrets"
+        secret:
+          secretName: "htpasswd"
