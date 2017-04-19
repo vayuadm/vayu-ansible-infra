@@ -13,6 +13,12 @@
       fail:
         msg: "You must supply one(!) of the following tags: [deployments]"
       when: tags is not defined
+    - name: "Clean configuration path"
+      file:
+        state: absent
+        path: "~/vars"
+      tags:
+        - always
     - name: "Copy configurations to ceribro cluster nodes"
       copy:
         src: vars
