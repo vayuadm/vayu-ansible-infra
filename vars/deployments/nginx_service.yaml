@@ -3,11 +3,15 @@ kind: Service
 apiVersion: v1
 metadata:
   name: nginx-service
+  labels:
+    component: nginx
+    kubernetes.io/cluster-service: "true"
 spec:
+  type: NodePort
   selector:
-    name: nginx
+    app: nginx
   ports:
-    - port: 80
-      name: http
-    - port: 443
-      name: https
+    - name: http
+      port: 80
+      nodePort: 32200
+      protocol: TCP

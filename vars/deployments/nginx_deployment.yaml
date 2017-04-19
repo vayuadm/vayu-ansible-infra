@@ -2,6 +2,9 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: nginx-deployment
+  labels:
+    component: nginx
+    kubernetes.io/cluster-service: "true"
 spec:
   template: # create pods using pod definition in this template
     metadata:
@@ -19,8 +22,8 @@ spec:
         - name: etc-nginx-confd
           mountPath: "/etc/nginx/conf.d/nginx-elastic.conf"
           subPath: nginx-elastic.conf
-        - name: "ceribro-secrets"
-          mountPath: "etc/nginx/conf.d/elasticsearch.htpasswd"
+        - name: elasticsearch-htpasswd
+          mountPath: "/etc/nginx/conf.d/elasticsearch.htpasswd"
           subPath: elasticsearch.htpasswd
           readOnly: true
       volumes:
@@ -30,6 +33,6 @@ spec:
             items:
             - key: nginx-elastic.conf
               path: nginx-elastic.conf
-        - name: "ceribro-secrets"
+        - name: elasticsearch-htpasswd
           secret:
-            secretName: "elasticsearch.htpasswd"
+            secretName: ceribro-secret
