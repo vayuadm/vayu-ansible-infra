@@ -20,8 +20,9 @@ spec:
           - mountPath: "/etc/nginx/conf.d/nginx-elastic.conf"
             name: etc-nginx-confd
             subPath: nginx-elastic.conf
-          - mountPath: "etc/nginx/secrets"
-            name: "secrets"
+          - mountPath: "etc/nginx/conf.d/elasticsearch.htpasswd"
+            name: "ceribro-secrets"
+            subPath: elasticsearch.htpasswd
             readOnly: true
     volumes:
       - name: etc-nginx-confd
@@ -30,6 +31,6 @@ spec:
           items:
           - key: nginx-elastic.conf
             path: nginx-elastic.conf
-      - name: "secrets"
+      - name: "ceribro-secrets"
         secret:
-          secretName: "htpasswd"
+          secretName: "elasticsearch.htpasswd"
