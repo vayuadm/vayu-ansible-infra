@@ -1,5 +1,5 @@
 ---
 - name: "Create the cluster in AWS"
-  command: "kops update cluster $CLUSTER_NAME \
+  command: "kops update cluster {{ cluster_name }} \
                                 --state=s3://{{ s3.bucket }} \
                                 --yes"
