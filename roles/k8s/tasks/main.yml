@@ -8,8 +8,8 @@
 
 - include: k8s_secret_task.yaml
   vars:
-    configmap_name: "{{ cluster.secret_name }}"
-    configmap_path: "/home/admin/vars/secrets"
+    secret_name: "{{ cluster.secret_name }}"
+    secret_path: "/home/admin/vars/secrets"
   tags:
     - deployments
 
