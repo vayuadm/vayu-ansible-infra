@@ -23,3 +23,17 @@
     dest_file: "{{ playbook_dir }}/keys/{{ region }}/{{ ec2_key_name }}.pub"
     bucket_name: "{{ s3.bucket }}"
   when: file_stat.stat.exists == False
+
+- name: "Remove URL from known_hosts"
+  known_hosts:
+    name: "api.{{ cluster_name }}"
+    state: absent
+
+# Change keys permissions
+- file:
+    path: "{{ playbook_dir }}/keys/{{ region }}/{{ ec2_key_name }}.pub"
+    mode: 0600
+
+- file:
+    path: "{{ playbook_dir }}/keys/{{ region }}/{{ ec2_key_name }}.pem"
+    mode: 0600

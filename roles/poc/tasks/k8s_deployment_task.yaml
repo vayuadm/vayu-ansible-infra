@@ -1,0 +1,9 @@
+---
+- block:
+  - name: "Create a new k8s Deployment"
+    command: "kubectl create -f {{ deployments_path }} --record"
+  rescue:
+  - name: "Delete deployment"
+    command: "kubectl delete -f {{ deployments_path }}"
+  - name: "Create a new k8s Deployment"
+    command: "kubectl create -f {{ deployments_path }} --record"

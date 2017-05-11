@@ -1,0 +1,43 @@
+---
+# Fetch AWS keys from S3
+- hosts: localhost
+  connection: local
+  become: false
+  vars_files:
+    - vars/main.yaml
+
+  tasks:
+    - include: roles/aws/tasks/mng_ec2_keys/fetch-if-not-available.yaml
+      tags:
+        - always
+
+# manage AWS environment
+- hosts: ceribro
+  connection: ssh
+  user: admin
+  become: false
+  vars_files:
+    - vars/main.yaml
+
+  pre_tasks:
+    - name: "Check if --tags is provided"
+      fail:
+        msg: "You must supply one(!) of the following tags: [deployments]"
+      when: tags is not defined
+    - name: "Clean configuration path"
+      file:
+        state: absent
+        path: "~/vars"
+      tags:
+        - always
+    - name: "Copy configurations to ceribro cluster nodes"
+      copy:
+        src: vars
+        dest: "~/"
+        owner: admin
+        mode: 0400
+      tags:
+        - always
+
+  roles:
+    - role: poc

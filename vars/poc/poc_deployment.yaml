@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: poc-deployment
+  labels:
+    component: poc
+    kubernetes.io/cluster-service: "true"
+spec:
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: poc
+    spec:
+      containers:
+      - name: todo-list
+        image: vayuio/vayu-poc-todo-list
+        ports:
+        - containerPort: 80

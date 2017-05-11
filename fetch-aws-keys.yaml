@@ -1,0 +1,13 @@
+---
+# manage AWS environment
+- hosts: localhost
+  connection: local
+  become: false
+  vars_files:
+    - vars/main.yaml
+
+  tasks:
+    - include: roles/aws/tasks/mng_ec2_keys/fetch-if-not-available.yaml
+      tags:
+        - kops-create
+        - kops-destroy

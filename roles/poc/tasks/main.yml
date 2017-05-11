@@ -1,0 +1,6 @@
+---    
+- include: k8s_deployment_task.yaml
+  vars:
+    deployments_path: "/home/admin/vars/poc"
+  tags:
+    - deployments

@@ -1,0 +1,17 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: poc-service
+  labels:
+    component: poc
+    kubernetes.io/cluster-service: "true"
+spec:
+  type: LoadBalancer
+  selector:
+    app: poc
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP

@@ -1,0 +1,64 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ item.deployment_name | mandatory }}
+  namespace: {{ item.namespace | default('default') }}
+spec:
+  replicas: {{ item.num_of_replicas | default(1) }}
+  template:
+    metadata:
+      labels:
+{% for label in item.labels %}
+        {{ label.key }}: {{ label.value }}
+{% endfor %}
+    spec:
+      containers:
+{% for container in item.containers %}
+# CONTAINER ITEM START
+      - name: {{ container.container_name }}
+        image: {{ container.deployment_image }}:{{ container.deployment_tag }}
+{% if container.resources is defined %}
+        resources:
+          # keep request = limit to keep this container in guaranteed class
+          limits:
+            cpu: {{ container.resources.limits.cpu }}
+            memory: {{ container.resources.limits.memory }}
+          requests:
+            cpu: {{ container.resources.requests.cpu }}
+            memory: {{ container.resources.requests.memory }}
+{% endif %}
+        ports:
+{% for port in container.ports %}
+        - containerPort: {{ port.targetPort | default(port.port) | default(port) }}
+{% if port.name is defined %}
+          name: {{ port.name }}
+{% endif %}
+{% endfor %}
+{% if container.env_vars is defined %}
+        env:
+{% for var in container.env_vars %}
+        - name: {{ var.name }}
+          value: {{ var.value }}
+{% endfor %}
+{% endif %}
+{% if container.volume_mounts is defined %}
+        volumeMounts:
+{% for volume in container.volume_mounts %}
+        - name: {{ volume.name }}
+          mountPath: {{ volume.path }}
+{% endfor %}
+{% endif %}
+# CONTAINER ITEM END
+{% endfor %}
+{% if item.volumes is defined %}
+      volumes:
+      - name: {{ item.volumes.name }}
+        {{ item.volumes.type }}: {% if item.volumes.fields is undefined %}{{ item.volumes.value }}{% endif %}
+{% if item.volumes.fields is defined %}
+
+{% for field in item.volumes.fields %}
+          {{ field.key }}: {{ field.value }}
+{% endfor %}
+{% endif %}
+{% endif %}
