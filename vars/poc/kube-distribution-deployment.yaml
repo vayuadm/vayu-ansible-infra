@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: poc-deployment
+  name: kube-distribution
   labels:
-    component: poc
+    component: kube-distribution
     kubernetes.io/cluster-service: "true"
 spec:
   template: # create pods using pod definition in this template
@@ -11,10 +11,10 @@ spec:
       # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
       # generated from the deployment name
       labels:
-        app: poc
+        app: kube-distribution
     spec:
       containers:
-      - name: todo-list
-        image: vayuio/vayu-poc-todo-list
+      - name: kube-distribution
+        image: vayuadm/kube-distribution
         ports:
-        - containerPort: 80
+        - containerPort: 5050
