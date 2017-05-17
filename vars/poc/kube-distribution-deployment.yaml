@@ -18,3 +18,5 @@ spec:
         image: vayuadm/kube-distribution
         ports:
         - containerPort: 5050
+          name: http
+          protocol: TCP
