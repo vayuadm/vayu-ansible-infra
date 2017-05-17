@@ -9,7 +9,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: poc
+    app: kube-distribution
   ports:
     - name: http
       port: 5050
