@@ -1,6 +1,12 @@
----    
+---
 - include: k8s_deployment_task.yaml
   vars:
     deployments_path: "/home/admin/vars/poc"
+  tags:
+    - deployments
+
+- include: roles/k8s/tasks/k8s_get_loadbalancer_ext_url.yaml
+  vars:
+    service_name: "poc-service"
   tags:
     - deployments

@@ -1,0 +1,17 @@
+---
+# - block:
+- name: "Create a new k8s configmap"
+  command: "kubectl get services -o jsonpath='{.items[?(@.metadata.name==\"{{ service_name }}\")].status.loadBalancer.ingress[?(@.hostname)].hostname}'"
+  register: service_url_output
+
+- set_fact:
+    service_url: "{{ service_url_output.stdout }}"
+  # rescue:
+  # - name: "Delete a new k8s configmap"
+    # command: "kubectl delete configmap {{ configmap_name }}"
+  # - name: "Create a new k8s configmap"
+    # command: "kubectl create configmap {{ configmap_name }} --from-file={{ configmap_path }}"
+
+- name: "Print url {{ service_url }}"
+  debug:
+    msg: "{{ service_url }}"
