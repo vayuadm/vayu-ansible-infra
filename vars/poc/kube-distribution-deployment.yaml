@@ -21,7 +21,5 @@ spec:
           name: http
           protocol: TCP
         env:
-          - name: KUBERNETES_TOKEN
-            value: $(kubectl describe secret $(kubectl get secrets | grep default | cut -f1 -d ' ') | grep -E '^token' | cut -f2 -d':' | tr -d '\t')
-          - name: KUBERNETES_CA_FILE
-            value: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          - name: KUBERNETES_CONFIG
+            value: $HOME/.kube/config
