@@ -20,6 +20,3 @@ spec:
         - containerPort: 5050
           name: http
           protocol: TCP
-        env:
-          - name: KUBERNETES_CONFIG
-            value: $HOME/.kube/config
