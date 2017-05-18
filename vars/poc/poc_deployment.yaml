@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: todo-list
-        image: vayuio/vayu-poc-todo-list
+        image: vayuadm/vayu-poc-todo-list
         ports:
         - containerPort: 80

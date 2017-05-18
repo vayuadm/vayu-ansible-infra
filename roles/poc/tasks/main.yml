@@ -10,3 +10,23 @@
     service_name: "poc-service"
   tags:
     - deployments
+
+# Gather facts about all ELBs
+- action:
+    module: ec2_elb_facts
+  register: elb_facts
+
+- name: Get poc load balancer
+  shell: "echo {{ item }}"
+  register: "elb"
+  with_items: elb_facts.elbs
+  when: item.dns_name == service_url
+
+- debug: var=elb
+
+- include: roles/aws/tasks/mng_route53/register/create-alias.yaml
+  vars:
+    zone_name: "{{ route53.zone.DNS }}"
+    elb_alias_name: "{{ route53.alias.record.mame }}.{{ route53.zone.DNS }}"
+    record_type: "{{ route53.alias.record.type }}"
+    elb_dns_name: "{{ service_url }}"
