@@ -1,6 +1,6 @@
 ---
 - name: "Add an alias record that points to an Amazon ELB"
-- route53:
+  route53:
       state: present
       zone: "{{ zone_name }}"
       record: "{{ elb_alias_name }}"
