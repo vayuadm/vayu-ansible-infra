@@ -7,3 +7,4 @@
       type: "{{ record_type }}"
       value: "{{ elb_dns_name }}"
       alias: True
+  
