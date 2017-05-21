@@ -11,6 +11,20 @@
   tags:
     - deployments
 
+- action:
+    module: ec2_elb_facts
+  register: elb_facts
+  tags:
+    - deployments
+    
+- action:
+    module: debug
+    msg: "{{ item }}"
+  with_items: "{{ elb_facts.elbs }}"
+  when: item.dns_name == service_url
+  tags:
+    - deployments
+
 - include: roles/aws/tasks/mng_route53/register/create-alias.yaml
   vars:
     zone_name: "{{ route53.zone.DNS }}"
