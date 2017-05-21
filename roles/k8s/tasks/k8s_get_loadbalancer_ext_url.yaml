@@ -1,6 +1,6 @@
 ---
 - name: "Get load balancer DNS name"
-  command: "kubectl get services -o jsonpath='{.items[?(@.metadata.name=={{ service_name }})].status.loadBalancer.ingress[?(@.hostname)].hostname}'"
+  command: "kubectl get services -o jsonpath='{.items[?(@.metadata.name==\"{{ service_name }}\")].status.loadBalancer.ingress[?(@.hostname)].hostname}'"
   register: service_url_output
 
 - set_fact:
