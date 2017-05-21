@@ -2,6 +2,9 @@
 - name: "Get load balancer DNS name"
   command: "kubectl get services -o jsonpath='{.items[?(@.metadata.name==\"{{ service_name }}\")].status.loadBalancer.ingress[?(@.hostname)].hostname}'"
   register: service_url_output
+  until: service_url_output.stdout != ""
+  retries: 60
+  delay: 5
 
 - set_fact:
     service_url: "{{ service_url_output.stdout }}"
