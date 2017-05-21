@@ -7,7 +7,7 @@
 
 - include: roles/k8s/tasks/k8s_get_loadbalancer_ext_url.yaml
   vars:
-    service_name: "poc-service"
+    service_name: "kube-distribution-service"
   tags:
     - deployments
 
