@@ -14,7 +14,7 @@
 - include: roles/aws/tasks/mng_route53/register/create-alias.yaml
   vars:
     zone_name: "{{ route53.zone.DNS }}"
-    elb_alias_name: "{{ route53.alias.record.mame }}.{{ route53.zone.DNS }}"
+    elb_alias_name: "{{ route53.alias.record.name }}.{{ route53.zone.DNS }}"
     record_type: "{{ route53.alias.record.type }}"
     elb_dns_name: "{{ service_url }}"
   when: service_url is defined and service_url != ""
