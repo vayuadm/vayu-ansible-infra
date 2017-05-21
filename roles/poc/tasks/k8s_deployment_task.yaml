@@ -4,6 +4,6 @@
     command: "kubectl create -f {{ deployments_path }} --record"
   rescue:
   - name: "Delete deployment"
-    command: "kubectl delete -f {{ deployments_path }}"
+    command: "kubectl delete -f {{ deployments_path }} --now"
   - name: "Create a new k8s Deployment"
     command: "kubectl create -f {{ deployments_path }} --record"
