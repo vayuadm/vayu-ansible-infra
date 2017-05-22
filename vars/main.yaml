@@ -30,6 +30,6 @@ route53:
   alias:
     record:
       type: "A"
-      name: "ceribro-ditribution"
+      name: "kube-ditribution"
 
 cluster_name: "{{ route53.record.subDNS }}.{{ route53.zone.DNS }}"

@@ -9,6 +9,6 @@
 - set_fact:
     service_url: "{{ service_url_output.stdout }}"
 
-- name: "Print url {{ service_url }}"
+- name: "Print ELB DNS name"
   debug:
     msg: "{{ service_url }}"
