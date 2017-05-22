@@ -30,6 +30,7 @@ route53:
   alias:
     record:
       type: "A"
-      name: "kube-ditribution"
+      distributor_name: "kube-ditribution"
+      app_name: "poc"
 
 cluster_name: "{{ route53.record.subDNS }}.{{ route53.zone.DNS }}"

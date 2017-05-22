@@ -1,0 +1,23 @@
+---
+- include: roles/k8s/tasks/k8s_get_loadbalancer_ext_url.yaml
+  vars:
+    service_name: "{{ service }}"
+  tags:
+    - deployments
+
+- include: roles/aws/tasks/mng_route53/register/create-alias.yaml
+  vars:
+    zone_name: "{{ route53.zone.DNS }}"
+    elb_alias_name: "{{ alias_name }}"
+    record_type: "{{ route53.alias.record.type }}"
+    elb_dns_name: "{{ service_url }}"
+    elb_zone_id: "Z3AADJGX6KTTL2"
+  when: service_url is defined and service_url != ""
+  tags:
+    - deployments
+
+- name: "Print alias name"
+  debug:
+    msg: "{{ alias_name }}"
+  tags:
+    - deployments
