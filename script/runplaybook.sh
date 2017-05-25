@@ -16,7 +16,7 @@ runPlaybook() {
       docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client aws-create.yaml --tags "$2"
     elif [[ "$2" == *"poc"* ]]
     then
-      echo Running poc.yaml playbook action: "$2"
+      echo Running poc.yaml playbook action: deployments
       docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client poc.yaml --tags deployments
     fi
 }
