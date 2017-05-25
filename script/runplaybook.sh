@@ -1,5 +1,5 @@
 #!/bin/bash
-# available actions: create, destroy, kops-create, kops-destroy, aws-create, aws-destroy, deployment
+# available actions: create, destroy, kops-create, kops-destroy, aws-create, aws-destroy, deployments
 
 runPlaybook() {
     if [ -z "$2" ]
@@ -17,7 +17,7 @@ runPlaybook() {
     elif [[ "$2" == *"poc"* ]]
     then
       echo Running poc.yaml playbook action: "$2"
-      docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client poc.yaml --tags "$2"
+      docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client poc.yaml --tags deployments
     fi
 }
 
