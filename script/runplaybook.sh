@@ -17,7 +17,7 @@ runPlaybook() {
     elif [[ "$2" == *"poc"* ]]
     then
       echo Running poc.yaml playbook action: deployments
-      docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client poc.yaml --tags deployments
+      docker run -it -v $PWD:/ansible/playbooks -v ~/.aws:/root/.aws vayuadm/vayu-ansible-client poc.yaml -i vars/hosts --tags deployments
     fi
 }
 
